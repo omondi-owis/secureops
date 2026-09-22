@@ -1,16 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sign in · MlinziOps</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" href="/static/css/app.css">
-</head>
-<body>
-<div id="app"><div class="login-wrap"><div class="login-card"><p class="muted">Loading…</p></div></div></div>
-<div id="toasts"></div>
-<script src="/static/js/app.js"></script>
-<script src="/static/js/pages.js"></script>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="flex min-h-screen w-full bg-slate-950 text-slate-100">
+  
+  <!-- LEFT COLUMN: Login Box -->
+  <div class="flex w-full lg:w-[450px] flex-col justify-center px-8 sm:px-12 py-12 border-r border-slate-800 bg-slate-900/50 backdrop-blur-md z-10">
+    <div class="max-w-sm w-full mx-auto space-y-6">
+      
+      <!-- Brand Header -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-blue-500 font-bold text-xl">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          <span>MlinziOps</span>
+        </div>
+        <p class="text-xs text-slate-400">Authorized security operations console. All activity is monitored and audited.</p>
+      </div>
+
+      <!-- Login Form -->
+      <form method="POST" action="/api/auth/login" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Username</label>
+          <input type="text" name="username" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Password</label>
+          <input type="password" name="password" required class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 rounded-lg transition-colors text-sm shadow-lg shadow-blue-600/20">
+          Sign in
+        </button>
+      </form>
+      
+      <p class="text-[10px] text-slate-500 text-center">Unauthorized access is prohibited. Sessions and actions are logged.</p>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN: Enterprise Branding & Showcase Space -->
+  <div class="hidden lg:flex flex-1 flex-col justify-between p-16 relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950/30">
+    
+    <!-- Subtle Grid Background Pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+    
+    <!-- Top Header badge -->
+    <div class="relative z-10 flex items-center justify-between">
+      <span class="px-3 py-1 text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full">
+        Enterprise Security Platform v2.0
+      </span>
+      <span class="text-xs text-slate-500">Securing Infrastructure 24/7</span>
+    </div>
+
+    <!-- Center Big Texts & Visual Identity -->
+    <div class="relative z-10 max-w-xl space-y-6 my-auto">
+      <h1 class="text-5xl font-extrabold tracking-tight text-white">
+        MLINZIOPS <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 text-3xl mt-2">Sovereign Threat Defense & SOC</span>
+      </h1>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        Empowering organizations with real-time telemetry, deterministic security heuristics, Wazuh log aggregation, and autonomous AI-assisted incident response.
+      </p>
+
+      <!-- Feature Pills -->
+      <div class="grid grid-cols-2 gap-4 pt-4">
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur">
+          <div class="text-blue-400 font-semibold text-sm mb-1">Live Telemetry</div>
+          <p class="text-xs text-slate-400">Continuous resource & log analysis via Server-Sent Events.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 backdrop-blur">
+          <div class="text-indigo-400 font-semibold text-sm mb-1">Autonomous AI</div>
+          <p class="text-xs text-slate-400">Strict safety guardrails with guided remediation playbooks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="relative z-10 text-xs text-slate-500 flex justify-between items-center border-t border-slate-800/60 pt-4">
+      <span>© 2026 MlinziOps Technologies. All rights reserved.</span>
+      <span class="text-blue-500 font-mono">SECURE-LAB-NODE-01</span>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
