@@ -1,0 +1,50 @@
+# SecureOps docker-compose deployment.
+# Wazuh is NOT part of this stack — configure WAZUH_* to point at an
+# external Wazuh manager; SecureOps degrades gracefully when it is offline.
+#
+# Run:  docker compose up -d --build
+# Seed admin: docker compose exec secureops python -m app.cli create-admin
+services:
+  secureops:
+    build: .
+    container_name: secureops
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # The DB URL uses the compose service hostname.
+      DATABASE_URL: postgresql+psycopg://secureops:${DB_PASSWORD:-ChangeMeDBPassword}@postgres:5432/secureops
+      APP_ENV: production
+      COOKIE_SECURE: "false" # set "true" when TLS terminates at Nginx
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://127.0.0.1:8000/api/wazuh/status", "-o", "/dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: secureops-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: secureops
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ChangeMeDBPassword}
+      POSTGRES_DB: secureops
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U secureops -d secureops"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "127.0.0.1:5432:5432" # local-only; keep DB off the public interface
+
+volumes:
+  postgres-data:

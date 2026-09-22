@@ -1,0 +1,10 @@
+line-length = 100
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = [
+    "E501",   # line length is stylistic (enforced by the formatter, not here)
+    "B008",   # FastAPI Depends() in default args is idiomatic
+    "B904",   # FastAPI `raise HTTPException(...)` inside except blocks
+]

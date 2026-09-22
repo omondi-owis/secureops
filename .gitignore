@@ -1,0 +1,37 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Databases / data
+*.sqlite3
+*.db
+postgres-data/
+
+# Logs
+*.log
+logs/
+
+# Reports output
+/output/
+*.pdf.tmp
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store

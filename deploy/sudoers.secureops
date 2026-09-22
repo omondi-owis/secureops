@@ -1,0 +1,27 @@
+# =============================================================================
+# SecureOps AI — minimal sudoers rule for the remediation playbook engine
+# Install:  sudo cp deploy/sudoers.secureops /etc/sudoers.d/secureops
+#           sudo chmod 440 /etc/sudoers.d/secureops
+#           sudo visudo -c
+#
+# Grants ONLY the service account the ability to restart the allowlisted
+# services via systemctl — no shells, no editors, no other binaries, and
+# definitively NOT `ALL`. This is the least-privilege backing for the
+# `execute_approved_remediation` tool (app/services/playbook_engine.py).
+#
+# If SecureOps is NOT expected to run remediation on this host, do not install
+# this file at all: the playbook engine then fails safely on permission denied.
+# =============================================================================
+
+Cmnd_Alias SECUREOPS_SERVICES = \
+    /usr/bin/systemctl restart wazuh-agent, \
+    /usr/bin/systemctl restart sshd, \
+    /usr/bin/systemctl restart ssh, \
+    /usr/bin/systemctl restart nginx, \
+    /usr/bin/systemctl restart postgresql, \
+    /usr/bin/systemctl restart rsyslog, \
+    /usr/bin/systemctl restart fail2ban, \
+    /usr/bin/systemctl restart unattended-upgrades, \
+    /usr/bin/systemctl restart systemd-journald
+
+secureops ALL=(root) NOPASSWD: SECUREOPS_SERVICES
