@@ -24,7 +24,7 @@ from typing import Any
 
 from app.config import settings
 
-logger = logging.getLogger("secureops.scanner")
+logger = logging.getLogger("mlinziops.scanner")
 
 
 class ScanAuthorizationError(ValueError):

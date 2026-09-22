@@ -1,5 +1,5 @@
 /* =====================================================
-   SecureOps — page renderers (loaded after app.js)
+   MlinziOps — page renderers (loaded after app.js)
    Every UI action maps to a real backend endpoint.
    ===================================================== */
 "use strict";
@@ -496,7 +496,7 @@ window.PAGES.wazuh = async function (el) {
       const agents = await getJSON("/wazuh/agents");
       document.getElementById("waz-agents").innerHTML = agents.length ? `<table class="data"><thead><tr><th>ID</th><th>Name</th><th>IP</th><th>OS</th><th>Status</th></tr></thead><tbody>
         ${agents.map(a => `<tr><td class="mono">${esc(a.id)}</td><td>${esc(a.name)}</td><td class="mono">${esc(a.ip || "-")}</td><td>${esc(a.os || "-")}</td><td>${statusBadge((a.status || "unknown").toUpperCase())}</td></tr>`).join("")}</tbody></table>`
-        : `<p class="muted">${st.connected ? "No agents." : "Wazuh unavailable — no agent data. SecureOps continues to operate."}</p>`;
+        : `<p class="muted">${st.connected ? "No agents." : "Wazuh unavailable — no agent data. MlinziOps continues to operate."}</p>`;
     } catch (e) { document.getElementById("waz-agents").innerHTML = `<p class="muted">${esc(e.message)}</p>`; }
     try {
       const alerts = await getJSON("/wazuh/alerts");
@@ -836,7 +836,7 @@ async function showHardening(el) {
     </div>`;
     el.innerHTML = chips + `<div class="card"><div class="table-wrap"><table class="data"><thead><tr><th>Result</th><th>Check</th><th>Detail</th><th>Remediation</th></tr></thead><tbody>
       ${r.checks.map(c => `<tr><td>${chkBadge(c.status)}</td><td>${esc(c.title)}</td><td class="small">${esc(c.detail)}</td><td class="small muted">${esc(c.remediation)}</td></tr>`).join("")}</tbody></table></div>
-      <p class="faint small" style="margin-top:10px;">Checks are read-only — SecureOps never modifies your system configuration.</p></div>`;
+      <p class="faint small" style="margin-top:10px;">Checks are read-only — MlinziOps never modifies your system configuration.</p></div>`;
   } catch (e) { el.innerHTML = `<div class="card"><p class="muted">${esc(e.message)}</p></div>`; }
 }
 
@@ -903,7 +903,7 @@ window.PAGES.profile = async function (el) {
 function debounce(fn, ms) { let t; return function () { clearTimeout(t); t = setTimeout(fn, ms); }; }
 
 /* ================================================================
-   AI ANALYST  (SecureOps AI)
+   AI ANALYST  (MlinziOps AI)
    ================================================================ */
 window.PAGES.ai = async function (el) {
   el.innerHTML = `<div class="muted">Loading AI status…</div>`;

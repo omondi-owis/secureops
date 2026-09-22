@@ -1,6 +1,6 @@
 """Persistent, non-secret settings service.
 
-Two kinds of settings exist in SecureOps:
+Two kinds of settings exist in MlinziOps:
 
 * Secret / environment values (SECRET_KEY, WAZUH_PASSWORD, DATABASE_URL, ...):
   read from settings (env/.env) — surfaced READ-ONLY in the UI, never stored

@@ -1,4 +1,4 @@
-"""Immutable audit trail for SecureOps itself."""
+"""Immutable audit trail for MlinziOps itself."""
 from __future__ import annotations
 
 from datetime import datetime, timezone

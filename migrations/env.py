@@ -1,6 +1,6 @@
 """Alembic environment.
 
-Reads the database URL from SecureOps settings (DATABASE_URL env var).
+Reads the database URL from MlinziOps settings (DATABASE_URL env var).
 """
 from __future__ import annotations
 

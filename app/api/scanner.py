@@ -31,7 +31,7 @@ from app.schemas import ScanCreate, ScanDetailOut, ScanOut, ScanServiceOut
 from app.services import detection_engine, nmap_scanner
 from app.services.audit import record
 
-logger = logging.getLogger("secureops.api.scanner")
+logger = logging.getLogger("mlinziops.api.scanner")
 
 router = APIRouter(prefix="/api/scanner", tags=["Scanning"])
 

@@ -1,8 +1,8 @@
-# SecureOps — Security Model
+# MlinziOps — Security Model
 
 ## Threat model
 
-SecureOps is a self-hosted SOC console. Adversarially it faces the LAN (and possibly the
+MlinziOps is a self-hosted SOC console. Adversarially it faces the LAN (and possibly the
 internet behind Nginx) with a privileged view into your logs, scans and incidents.
 The code therefore assumes:
 

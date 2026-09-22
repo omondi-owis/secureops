@@ -9,7 +9,7 @@ Playbooks are the ONLY way the platform changes system state. Design rules:
 * Every run records preconditions, result, and offers a rollback action;
   temporary changes are preferred over permanent ones.
 * Host process privilege lives with a predefined sudoers rule (see
-  deploy/sudoers.secureops), never NOPASSWD:ALL.
+  deploy/sudoers.mlinziops), never NOPASSWD:ALL.
 """
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ from typing import Any
 from app.database import SessionLocal
 from app.models import Playbook
 
-logger = logging.getLogger("secureops.playbooks")
+logger = logging.getLogger("mlinziops.playbooks")
 
 # Hard allowlist of restarts permitted (spec §26/§42 minimal privilege).
 SERVICE_ALLOWLIST = frozenset({
@@ -133,7 +133,7 @@ async def execute_playbook(name: str, service: str | None = None) -> dict[str, A
             }
 
     # Execute — systemctl is invoked directly; the service account needs a
-    # minimal sudoers rule for exactly this command (see deploy/sudoers.secureops).
+    # minimal sudoers rule for exactly this command (see deploy/sudoers.mlinziops).
     rc, out = _run(["systemctl", "restart", target], timeout=60)
     executed = rc == 0
 

@@ -13,7 +13,7 @@ from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 from app.config import settings
 
-logger = logging.getLogger("secureops.database")
+logger = logging.getLogger("mlinziops.database")
 
 # `pool_pre_ping` re-validates connections after a Wazuh/db hiccup.
 engine = create_engine(

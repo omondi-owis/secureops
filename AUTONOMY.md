@@ -1,4 +1,4 @@
-# SecureOps AI — Autonomy Modes & Guardrails
+# MlinziOps AI — Autonomy Modes & Guardrails
 
 Human authority is the default. The AI may only act within the bound of the
 currently selected autonomy mode, a per-hour action budget, the emergency-stop

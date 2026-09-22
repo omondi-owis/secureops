@@ -29,7 +29,7 @@ def get_optional_token(request: Request) -> str | None:
     auth = request.headers.get("Authorization")
     if auth and auth.lower().startswith("bearer "):
         return auth.split(" ", 1)[1].strip()
-    return request.cookies.get("secureops_token")
+    return request.cookies.get("mlinziops_token")
 
 
 TokenDep = Annotated[str | None, Depends(get_optional_token)]

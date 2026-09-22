@@ -1,4 +1,4 @@
-"""SecureOps application package.
+"""MlinziOps application package.
 
 A self-hosted security operations dashboard for an authorized home lab.
 """

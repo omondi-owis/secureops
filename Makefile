@@ -1,4 +1,4 @@
-# SecureOps make targets
+# MlinziOps make targets
 .PHONY: help install migrate admin seed test run lint tree
 
 help:

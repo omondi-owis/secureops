@@ -15,7 +15,7 @@ from app.ai.safety import validate_decision
 from app.database import SessionLocal
 from app.models import AIDecision
 
-logger = logging.getLogger("secureops.ai.decision")
+logger = logging.getLogger("mlinziops.ai.decision")
 
 
 def utcnow() -> datetime:

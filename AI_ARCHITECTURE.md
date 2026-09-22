@@ -1,11 +1,11 @@
-# SecureOps AI — Architecture
+# MlinziOps AI — Architecture
 
 This document describes the AI-assisted / autonomous decision layer added in
-**SecureOps AI 2.0**. Deterministic monitoring (the v1 detection engine, Wazuh
+**MlinziOps AI 2.0**. Deterministic monitoring (the v1 detection engine, Wazuh
 integration, log analysis, hardening checks) continues to run **unchanged**;
 the AI layer sits on top and can never disable it.
 
-> SecureOps AI never receives root or arbitrary shell access. There is no
+> MlinziOps AI never receives root or arbitrary shell access. There is no
 > `POST /execute-command` endpoint, no `shell=True` on user input, and no path
 > from raw model output to a running process.
 

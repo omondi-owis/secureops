@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
 
-logger = logging.getLogger("secureops.system")
+logger = logging.getLogger("mlinziops.system")
 
 
 def utcnow() -> datetime:

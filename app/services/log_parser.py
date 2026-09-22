@@ -17,7 +17,7 @@ from typing import Any
 
 from app.config import settings
 
-logger = logging.getLogger("secureops.logparser")
+logger = logging.getLogger("mlinziops.logparser")
 
 # Regex patterns for Ubuntu/Debian auth.log and syslog lines.
 import re

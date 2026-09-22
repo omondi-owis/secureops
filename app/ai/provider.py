@@ -2,7 +2,7 @@
 
 Three providers share one interface: ``analyze(prompt) -> str``, plus a
 ``probe()`` health check used by the AI dashboard. The platform never depends
-on a specific vendor and always keeps working when the AI is unavailable.
+på a specific vendor and always keeps working when the AI is unavailable.
 
 Providers:
     DisabledProvider         - deterministic no-op (used when ai_provider is off)
@@ -19,7 +19,7 @@ import httpx
 
 from app.config import settings
 
-logger = logging.getLogger("secureops.ai.provider")
+logger = logging.getLogger("mlinziops.ai.provider")
 
 
 class AIProviderError(RuntimeError):
@@ -128,7 +128,11 @@ class OpenAICompatibleProvider(AIProvider):
     name = "openai_compatible"
 
     def __init__(self) -> None:
-        self.base_url = (settings.ai_base_url or "http://localhost:8080").rstrip("/")
+        raw_base = (settings.ai_base_url or "http://localhost:8080").rstrip("/")
+        # Normalize base URL by stripping trailing /v1 to prevent double-appending
+        if raw_base.endswith("/v1"):
+            raw_base = raw_base[:-3].rstrip("/")
+        self.base_url = raw_base
         self.model = settings.ai_model
         self.api_key = settings.ai_api_key
 
@@ -167,17 +171,22 @@ class OpenAICompatibleProvider(AIProvider):
             "temperature": settings.ai_temperature,
             "max_tokens": settings.ai_max_tokens,
         }
+        
+        chat_url = f"{self.base_url}/v1/chat/completions"
         try:
             async with httpx.AsyncClient(timeout=settings.ai_timeout_seconds) as client:
                 resp = await client.post(
-                    f"{self.base_url}/v1/chat/completions",
+                    chat_url,
                     json=payload,
                     headers=self._headers(),
                 )
         except httpx.HTTPError as exc:
             raise AIProviderError(f"Provider request failed: {exc.__class__.__name__}") from exc
+
         if resp.status_code != 200:
-            raise AIProviderError(f"Provider returned HTTP {resp.status_code}")
+            err_snippet = (resp.text or "")[:300]
+            raise AIProviderError(f"Provider returned HTTP {resp.status_code} for {chat_url}: {err_snippet}")
+
         try:
             data = resp.json()
         except ValueError as exc:

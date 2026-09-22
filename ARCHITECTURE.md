@@ -1,4 +1,4 @@
-# SecureOps — Architecture
+# MlinziOps — Architecture
 
 ## 1. Overview & data flow
 
@@ -19,7 +19,7 @@
                                                          │ Wazuh REST API
                                                          ▼
                                                ┌────────────────────┐
-                                               │     SecureOps      │
+                                               │     MlinziOps      │
                                                │    (FastAPI app)   │
                                                └─────┬─────────┬────┘
                                                      │         │
@@ -95,5 +95,5 @@ An in-process pub/sub (`app/stream.py`) fans events over **Server-Sent Events** 
 ## 8. Deployment shapes
 
 - **Dev**: `uvicorn app.main:app --reload` + local PostgreSQL.
-- **Docker**: `docker-compose.yml` (secureops + postgres; Wazuh external).
-- **Bare metal**: Nginx → Uvicorn (4 workers) under systemd, dedicated `secureops` account with `adm`/`systemd-journal` supplementary groups for log access.
+- **Docker**: `docker-compose.yml` (mlinziops + postgres; Wazuh external).
+- **Bare metal**: Nginx → Uvicorn (4 workers) under systemd, dedicated `mlinziops` account with `adm`/`systemd-journal` supplementary groups for log access.

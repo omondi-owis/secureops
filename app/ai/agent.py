@@ -1,4 +1,4 @@
-"""The SecureOps AI agent (spec §5).
+"""The MlinziOps AI agent (spec §5).
 
 Responsibilities:
   run_tool      — structured tool dispatch (schema -> risk -> register -> run -> audit)
@@ -41,7 +41,7 @@ from app.constants import (
 from app.database import SessionLocal
 from app.models import AIAction, AIApproval, AIDecision, Incident, User
 
-logger = logging.getLogger("secureops.ai.agent")
+logger = logging.getLogger("mlinziops.ai.agent")
 
 # Autonomy mode that permits autonomous execution of low-risk actions.
 _AUTONOMOUS_MODES = {MODE_CONTROLLED_AUTONOMY}

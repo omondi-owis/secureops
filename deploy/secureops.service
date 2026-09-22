@@ -1,32 +1,32 @@
 # =========================================================================
-# SecureOps systemd service
-# Install:  sudo cp deploy/secureops.service /etc/systemd/system/
+# MlinziOps systemd service
+# Install:  sudo cp deploy/mlinziops.service /etc/systemd/system/
 #           sudo systemctl daemon-reload
-#           sudo systemctl enable --now secureops
+#           sudo systemctl enable --now mlinziops
 # =========================================================================
 [Unit]
-Description=SecureOps security operations dashboard
+Description=MlinziOps security operations dashboard
 After=network.target postgresql.service
 Wants=postgresql.service
 
 [Service]
 Type=simple
 # Dedicated service account (NEVER root).
-User=secureops
-Group=secureops
-WorkingDirectory=/opt/secureops
-EnvironmentFile=/opt/secureops/.env
+User=mlinziops
+Group=mlinziops
+WorkingDirectory=/opt/mlinziops
+EnvironmentFile=/opt/mlinziops/.env
 # --- Log-reading permissions ------------------------------------------
 # The application reads /var/log/auth.log & /var/log/syslog and runs journalctl,
 # nmap and systemctl checks. Grant the service account group-based access:
-#   sudo usermod -aG adm,systemd-journal secureops   # adm => auth.log/syslog
-#   sudo usermod -aG sudo secureops                  # ONLY if you want the
+#   sudo usermod -aG adm,systemd-journal mlinziops   # adm => auth.log/syslog
+#   sudo usermod -aG sudo mlinziops                  # ONLY if you want the
 #                                                     # sudoers/ufw checks to work
 # (See INSTALLATION.md §6 for the exact commands and trade-offs.)
 SupplementaryGroups=adm systemd-journal
 
 # Single worker: the SOC loop and SSE feeds are designed for one process.
-ExecStart=/opt/secureops/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
+ExecStart=/opt/mlinziops/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=on-failure
 RestartSec=5
 
@@ -35,7 +35,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=true
-ReadWritePaths=/opt/secureops/reports_output
+ReadWritePaths=/opt/mlinziops/reports_output
 # Allow reading system logs/journals + running nmap
 ProtectKernelTunables=true
 ProtectControlGroups=true

@@ -1,4 +1,4 @@
-"""SecureOps command-line interface.
+"""MlinziOps command-line interface.
 
 Usage:
     python -m app.cli create-admin
@@ -18,7 +18,7 @@ from app.logging_config import configure_logging
 
 def main() -> int:
     configure_logging()
-    parser = argparse.ArgumentParser(prog="secureops", description="SecureOps CLI")
+    parser = argparse.ArgumentParser(prog="mlinziops", description="MlinziOps CLI")
     sub = parser.add_subparsers(dest="command", required=True)
 
     sub.add_parser("create-admin", help="Create the initial admin account")

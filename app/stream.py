@@ -10,7 +10,7 @@ import json
 import logging
 from collections import deque
 
-logger = logging.getLogger("secureops.stream")
+logger = logging.getLogger("mlinziops.stream")
 
 _subscribers: set[asyncio.Queue] = set()
 _recent: deque = deque(maxlen=200)

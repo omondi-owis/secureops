@@ -10,7 +10,7 @@ import logging
 from app.ai.registry import Tool, registry
 from app.constants import RISK_LOW
 
-logger = logging.getLogger("secureops.tools.network")
+logger = logging.getLogger("mlinziops.tools.network")
 
 
 def register() -> None:

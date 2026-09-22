@@ -1,4 +1,4 @@
-"""SecureOps internal audit trail service.
+"""MlinziOps internal audit trail service.
 
 Audit records are append-only from the UI: there is no update/delete API for
 the audit_logs table. Every security-relevant action (login, scan, incident
@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 
 from app.models import AuditLog, User
 
-logger = logging.getLogger("secureops.audit")
+logger = logging.getLogger("mlinziops.audit")
 
 
 def record(

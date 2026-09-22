@@ -2,7 +2,7 @@
 
 * Reads credentials ONLY from environment (.env) — never hard-coded.
 * Gracefully degrades: when Wazuh is unavailable, disconnected or returns
-  auth errors, the client raises WazuhError and the rest of SecureOps keeps
+  auth errors, the client raises WazuhError and the rest of MlinziOps keeps
   working (status surfaces as OFFLINE).
 * Never fabricates alert data.
 """
@@ -16,7 +16,7 @@ import httpx
 
 from app.config import settings
 
-logger = logging.getLogger("secureops.wazuh")
+logger = logging.getLogger("mlinziops.wazuh")
 
 
 class WazuhError(RuntimeError):

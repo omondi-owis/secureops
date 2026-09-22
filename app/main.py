@@ -1,4 +1,4 @@
-"""SecureOps application entrypoint (FastAPI).
+"""MlinziOps application entrypoint (FastAPI).
 
 * Mounts static assets and Jinja2 page templates.
 * Global security headers + CSP middleware.
@@ -43,7 +43,7 @@ from app.api import (
 )
 
 configure_logging()
-logger = logging.getLogger("secureops")
+logger = logging.getLogger("mlinziops")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
@@ -104,7 +104,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=settings.app_name,
     version=settings.version,
-    description="SecureOps AI — self-hosted AI-assisted security operations for an authorized cybersecurity lab.",
+    description="MlinziOps AI — self-hosted AI-assisted security operations for an authorized cybersecurity lab.",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",

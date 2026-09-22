@@ -1,6 +1,6 @@
-# SecureOps AI — Incident Response
+# MlinziOps AI — Incident Response
 
-A hands-on runbook for operating SecureOps AI during a suspected incident.
+A hands-on runbook for operating MlinziOps AI during a suspected incident.
 Deterministic rules fire first; the AI assists but never replaces human
 judgement.
 
@@ -11,7 +11,7 @@ judgement.
 1. Open **Dashboard** → check CRITICAL/HIGH counts, recent events, and the
    Wazuh status pill.
 2. Open **Security Events** and filter by severity; link events to an incident.
-3. If Wazuh shows **OFFLINE**, treat it as an availability state — SecureOps
+3. If Wazuh shows **OFFLINE**, treat it as an availability state — MlinziOps
    continues with local logs and never fabricates alerts.
 
 ## 2. Let the AI investigate (optional)
@@ -38,7 +38,7 @@ judgement.
 - Suspected host compromised → isolate at the network level (out of scope for
   the app by design; do it on your hypervisor/router/firewall).
 - Suspected SSH brute-force → confirm the source in Events; block it at your
-  firewall/reverse proxy. SecureOps will not do this for you automatically.
+  firewall/reverse proxy. MlinziOps will not do this for you automatically.
 - If the AI's autonomous behaviour is ever in doubt: press
   **STOP AUTONOMOUS ACTIONS** immediately.
 
@@ -56,7 +56,7 @@ judgement.
    AI decisions/actions, mode changes).
 3. Close incidents with status and note the root cause in the timeline.
 4. Review **Vulnerabilities** listed as *"Potential vulnerability / Requires
-   validation"* — validate before remediation; SecureOps never claims
+   validation"* — validate before remediation; MlinziOps never claims
    confirmation from version matching alone.
 
 ## 7. If the AI misbehaves
@@ -70,7 +70,7 @@ judgement.
 
 ## 8. Out-of-scope targets
 
-SecureOps refuses to scan anything outside the authorized scope (registered
+MlinziOps refuses to scan anything outside the authorized scope (registered
 hosts, private/lab ranges, configured `AUTHORIZED_CIDRS`). If you legitimately
 need to scan a host you own, add it via the Hosts page, or widen
 `AUTHORIZED_CIDRS`/`extra_authorized_cidrs` (ADMIN). Unauthorized scanning is

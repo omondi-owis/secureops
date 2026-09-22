@@ -1,4 +1,4 @@
-# SecureOps AI — Tool Registry
+# MlinziOps AI — Tool Registry
 
 The AI agent has **no shell access**. Every capability it can use is a
 registered `Tool` with a name, description, JSON input schema, risk level,
@@ -73,7 +73,7 @@ rejected (see `app/services/nmap_scanner.py`).
   never `shell=True`, never free-form.
 - Every playbook carries preconditions, verification, and rollback metadata.
 - A preconfigured minimal sudoers rule grants the service account *only* the
-  restart command (see `deploy/sudoers.secureops`).
+  restart command (see `deploy/sudoers.mlinziops`).
 
 ---
 

@@ -1,4 +1,4 @@
-"""SQLAlchemy ORM models for the SecureOps domain."""
+"""SQLAlchemy ORM models for the MlinziOps domain."""
 from app.models.user import User  # noqa: F401
 from app.models.host import Host  # noqa: F401
 from app.models.scan import Scan, ScanService  # noqa: F401

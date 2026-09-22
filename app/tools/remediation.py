@@ -12,7 +12,7 @@ import logging
 from app.ai.registry import Tool, registry
 from app.constants import RISK_MEDIUM, RISK_READ_ONLY
 
-logger = logging.getLogger("secureops.tools.remediation")
+logger = logging.getLogger("mlinziops.tools.remediation")
 
 
 def register() -> None:

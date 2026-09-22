@@ -33,24 +33,24 @@ class Settings(BaseSettings):
     )
 
     # Application
-    app_name: str = "SecureOps AI"
+    app_name: str = "MlinziOps AI"
     app_tagline: str = "AI-assisted Security Operations"
     app_env: str = "development"  # development | testing | production
     secret_key: str = "CHANGE_ME"
     cookie_secure: bool = False
-    session_cookie_name: str = "secureops_session"
+    session_cookie_name: str = "mlinziops_session"
     access_token_expire_minutes: int = 480
     jwt_algorithm: str = "HS256"
     version: str = "2.0.0"
 
     # Database
     database_url: str = (
-        "postgresql+psycopg://secureops:secureops@localhost:5432/secureops"
+        "postgresql+psycopg://mlinziops:mlinziops@localhost:5432/mlinziops"
     )
 
     # Initial admin (used by CLI / seed)
     default_admin_username: str = "admin"
-    default_admin_email: str = "admin@secureops.local"
+    default_admin_email: str = "admin@mlinziops.local"
     default_admin_password: str = "CHANGE_ME"
 
     # Wazuh

@@ -23,7 +23,7 @@ from app.models import Incident, IncidentNote, SecurityEvent
 from app.services import detection_engine, log_parser, wazuh_client
 from app.services.audit import record as audit_record
 
-logger = logging.getLogger("secureops.soc")
+logger = logging.getLogger("mlinziops.soc")
 
 
 def utcnow() -> datetime:

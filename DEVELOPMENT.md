@@ -1,4 +1,4 @@
-# SecureOps — Development Guide
+# MlinziOps — Development Guide
 
 ## Tooling
 
@@ -8,7 +8,7 @@
 ## Project layout
 
 ```text
-secureops/
+mlinziops/
 ├── app/                 # application package
 │   ├── main.py          # FastAPI factory, middleware, SSE, page routes
 │   ├── config.py        # pydantic-settings
@@ -27,7 +27,7 @@ secureops/
 ├── static/              # css + js (app.js, pages.js)
 ├── templates/           # Jinja2 pages
 ├── tests/               # pytest suite
-├── deploy/secureops.service
+├── deploy/mlinziops.service
 ├── Dockerfile / docker-compose.yml / nginx.conf
 └── docs (this file set)
 ```

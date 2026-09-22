@@ -1,8 +1,8 @@
-# SecureOps
+# MlinziOps
 
-**SecureOps** is a self-hosted security operations dashboard for an *authorized* cybersecurity home lab. It monitors your Linux Ubuntu server, ingests and analyzes security logs, detects suspicious authentication patterns, integrates with [Wazuh](https://wazuh.com/), performs **authorized** Nmap reconnaissance, manages security incidents and produces PDF security-assessment reports.
+**MlinziOps** is a self-hosted security operations dashboard for an *authorized* cybersecurity home lab. It monitors your Linux Ubuntu server, ingests and analyzes security logs, detects suspicious authentication patterns, integrates with [Wazuh](https://wazuh.com/), performs **authorized** Nmap reconnaissance, manages security incidents and produces PDF security-assessment reports.
 
-> ⚠️ **Authorized use only.** SecureOps is a defensive monitoring and *authorized* testing tool for systems you own or are permitted to assess. It enforces an allow-list on scanning targets and cannot be used — by design — to scan arbitrary internet hosts.
+> ⚠️ **Authorized use only.** MlinziOps is a defensive monitoring and *authorized* testing tool for systems you own or are permitted to assess. It enforces an allow-list on scanning targets and cannot be used — by design — to scan arbitrary internet hosts.
 
 ---
 
@@ -15,7 +15,7 @@ A home-lab / small-team SOC practice rig that actually runs: real telemetry, a r
 ```text
 Kali Linux ──(authorized reconnaissance)──▶ Ubuntu Server ──(logs / psutil)──┐
                                                                                  │
-Wazuh Manager ──(Wazuh API: agents, alerts)──────▶ SecureOps (FastAPI) ◀───────┤
+Wazuh Manager ──(Wazuh API: agents, alerts)──────▶ MlinziOps (FastAPI) ◀───────┤
                                                        │
                                           PostgreSQL   └── Web Dashboard (SPA)
 ```
@@ -38,7 +38,7 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for the full picture.
 - **Reports** — PDF assessment reports (no secrets, ever).
 - **Audit log** — append-only record of every security-relevant action.
 
-## SecureOps AI (v2)
+## MlinziOps AI (v2)
 
 - **Controlled AI agent** — structured decisions, correlated investigations,
   recommendations, controlled actions and an immutable audit trail. The AI has
@@ -51,7 +51,7 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for the full picture.
 - **Human approval workflow** — MEDIUM/HIGH-risk actions always require an
   APPROVE/REJECT/INVESTIGATE review before execution.
 - **Deterministic-first detection** — the v1 rules always run; the AI layer
-  assists and can never disable monitoring. If the AI is offline, SecureOps
+  assists and can never disable monitoring. If the AI is offline, MlinziOps
   keeps working ([AI_ARCHITECTURE.md](AI_ARCHITECTURE.md)).
 - **Prompt-injection defence** — telemetry is treated as untrusted data,
   sanitized and labelled; no hallucinated events, IPs, CVEs or logs.
@@ -61,14 +61,14 @@ See **[ARCHITECTURE.md](ARCHITECTURE.md)** for the full picture.
 ## Quick start (development)
 
 ```bash
-git clone <your-repo> secureops && cd secureops
+git clone <your-repo> mlinziops && cd mlinziops
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 # PostgreSQL
 sudo apt install postgresql
-sudo -u postgres psql -c "CREATE ROLE secureops LOGIN PASSWORD 'secureops';"
-sudo -u postgres createdb -O secureops secureops
+sudo -u postgres psql -c "CREATE ROLE mlinziops LOGIN PASSWORD 'mlinziops';"
+sudo -u postgres createdb -O mlinziops mlinziops
 
 cp .env.example .env   # then edit SECRET_KEY, DB password, CIDRs
 alembic upgrade head

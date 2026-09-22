@@ -30,7 +30,7 @@ from app.constants import (
     SEVERITIES,
 )
 
-logger = logging.getLogger("secureops.ai.safety")
+logger = logging.getLogger("mlinziops.ai.safety")
 
 # Forbidden/blocked token heuristics — first line of defence (spec §30/§46).
 _FORBIDDEN_ACTION_TOKENS = (

@@ -1,11 +1,11 @@
 /* =====================================================
-   SecureOps — frontend application core
+   MlinziOps — frontend application core
    Hash-based SPA router + API client + page renderers.
    ===================================================== */
 "use strict";
 
 const API = "/api";
-let TOKEN = localStorage.getItem("secureops_token") || "";
+let TOKEN = localStorage.getItem("mlinziops_token") || "";
 let ME = null;
 
 /* ---------------- state / permissions ---------------- */
@@ -116,7 +116,7 @@ function renderShell(page, seg) {
     ${loginBanner()}
     <aside class="sidebar">
       <div class="brand"><span class="shield"><i class="fa-solid fa-shield-halved"></i></span>
-        <span>SecureOps<span class="sub">SOC Console</span></span></div>
+        <span>MlinziOps<span class="sub">SOC Console</span></span></div>
       <nav class="nav-group"><div class="label">Operations</div>${items}</nav>
       <nav class="nav-group"><div class="label">AI &amp; Automation</div>${aiItems}</nav>
       <div class="sidebar-foot">v2.0.0 · authorized lab use only</div>
@@ -154,7 +154,7 @@ function pageTitle(p) {
     events: "Security Events", wazuh: "Wazuh Integration", incidents: "Incidents",
     vulnerabilities: "Vulnerabilities", reports: "Reports", audit: "Audit Log",
     settings: "Settings", profile: "Profile",
-    ai: "AI Analyst", approvals: "Approval Queue", playbooks: "Playbooks" }[p] || "SecureOps";
+    ai: "AI Analyst", approvals: "Approval Queue", playbooks: "Playbooks" }[p] || "MlinziOps";
 }
 
 /* ---------------- clock ---------------- */
@@ -204,8 +204,8 @@ async function login(username, password) {
   if (!resp.ok) throw new Error(data.detail || "Login failed");
   TOKEN = data.access_token;
   ME = data.user;
-  localStorage.setItem("secureops_token", TOKEN);
-  localStorage.setItem("secureops_me", JSON.stringify(ME));
+  localStorage.setItem("mlinziops_token", TOKEN);
+  localStorage.setItem("mlinziops_me", JSON.stringify(ME));
   location.hash = "#/dashboard";
   toast("Welcome, " + ME.username, "ok");
 }
@@ -214,7 +214,7 @@ function logout(expired) {
   try { if (TOKEN) api("/auth/logout", { method: "POST" }); } catch (_) {}
   _loggingOut = false;
   TOKEN = ""; ME = null;
-  localStorage.removeItem("secureops_token"); localStorage.removeItem("secureops_me");
+  localStorage.removeItem("mlinziops_token"); localStorage.removeItem("mlinziops_me");
   if (_sse) { _sse.close(); _sse = null; }
   location.hash = "#/login";
   if (expired) toast("Session expired", "warn");
@@ -226,7 +226,7 @@ function renderLogin() {
     <div class="login-card">
       <div class="brand" style="padding:0 0 14px; border:none;">
         <span class="shield"><i class="fa-solid fa-shield-halved"></i></span>
-        <span>SecureOps<span class="sub">Security Operations</span></span>
+        <span>MlinziOps<span class="sub">Security Operations</span></span>
       </div>
       <p class="muted small" style="margin-top:0;">Authorized security operations console. All activity is monitored and audited.</p>
       <label>Username</label>
@@ -260,8 +260,8 @@ function renderLogin() {
 
 /* ---------------- init ---------------- */
 async function boot() {
-  const t = localStorage.getItem("secureops_token");
-  const m = localStorage.getItem("secureops_me");
+  const t = localStorage.getItem("mlinziops_token");
+  const m = localStorage.getItem("mlinziops_me");
   if (t) { TOKEN = t; ME = JSON.parse(m || "null"); }
   window.addEventListener("hashchange", route);
   if (!TOKEN) {
@@ -272,7 +272,7 @@ async function boot() {
   if (!ME) {
     try {
       ME = await getJSON("/auth/me");
-      localStorage.setItem("secureops_me", JSON.stringify(ME));
+      localStorage.setItem("mlinziops_me", JSON.stringify(ME));
     } catch (e) {
       logout(false);
       return;

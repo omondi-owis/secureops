@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from typing import Any
 
-logger = __import__("logging").getLogger("secureops.detection")
+logger = __import__("logging").getLogger("mlinziops.detection")
 
 # Rule 1 — SSH brute-force heuristic (same source, >=5 failures in 5 min).
 SSH_FAILURE_TYPES = {

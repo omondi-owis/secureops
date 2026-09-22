@@ -1,4 +1,4 @@
-# SecureOps — Testing Guide
+# MlinziOps — Testing Guide
 
 ## Run the suite
 
@@ -9,7 +9,7 @@ pytest tests/test_api.py -q   # API/integration tests only
 pytest -q --tb=short      # short tracebacks
 ```
 
-The suite runs against a **dedicated test database** `secureops_test`, created from
+The suite runs against a **dedicated test database** `mlinziops_test`, created from
 the same PostgreSQL server. Override with `TEST_DATABASE_URL` if needed.
 
 ## What is covered

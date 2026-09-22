@@ -1,6 +1,6 @@
 """pytest fixtures: create an isolated PostgreSQL test database per session.
 
-Uses the same Postgres server as development but a dedicated `secureops_test`
+Uses the same Postgres server as development but a dedicated `mlinziops_test`
 database, created/dropped via the postgres superuser where possible.
 """
 from __future__ import annotations
@@ -15,7 +15,7 @@ from sqlalchemy.orm import sessionmaker
 os.environ.setdefault("APP_ENV", "testing")
 
 TEST_DB_URL = os.environ.get(
-    "TEST_DATABASE_URL", "postgresql+psycopg://secureops:secureops@127.0.0.1:5432/secureops_test"
+    "TEST_DATABASE_URL", "postgresql+psycopg://mlinziops:mlinziops@127.0.0.1:5432/mlinziops_test"
 )
 
 # Set config BEFORE importing app modules.
@@ -40,14 +40,14 @@ def _create_test_db() -> None:
         eng = _admin_engine()
         with eng.connect() as conn:
             conn.execute(
-                text("DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname='secureops') "
-                     "THEN CREATE ROLE secureops LOGIN PASSWORD 'secureops'; END IF; END $$;")
+                text("DO $$ BEGIN IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname='mlinziops') "
+                     "THEN CREATE ROLE mlinziops LOGIN PASSWORD 'mlinziops'; END IF; END $$;")
             )
             existing = conn.execute(
-                text("SELECT 1 FROM pg_database WHERE datname='secureops_test'")
+                text("SELECT 1 FROM pg_database WHERE datname='mlinziops_test'")
             ).scalar()
             if not existing:
-                conn.execute(text("CREATE DATABASE secureops_test OWNER secureops"))
+                conn.execute(text("CREATE DATABASE mlinziops_test OWNER mlinziops"))
     except Exception as exc:  # pragma: no cover - depends on server privileges
         import warnings
 

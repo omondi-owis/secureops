@@ -16,7 +16,7 @@ import hashlib
 import json
 from typing import Any
 
-SYSTEM_CONTRACT = """You are the SecureOps security analyst. You assist a SOC by
+SYSTEM_CONTRACT = """You are the MlinziOps security analyst. You assist a SOC by
 analyzing evidence with tools whose results are provided to you as structured
 JSON. You never execute commands yourself; you only propose structured decisions.
 

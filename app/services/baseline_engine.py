@@ -13,7 +13,7 @@ from typing import Any
 from app.database import SessionLocal
 from app.models import Baseline, Service
 
-logger = logging.getLogger("secureops.baseline")
+logger = logging.getLogger("mlinziops.baseline")
 
 
 def utcnow() -> datetime:

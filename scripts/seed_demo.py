@@ -123,8 +123,8 @@ def insert_demo_incidents(db: Session) -> list[Incident]:
 def ensure_demo_users(db: Session) -> None:
     """Create demo analyst/viewer accounts if absent (lab use only)."""
     demo_users = [
-        ("analyst", "analyst@secureops.local", "ANALYST"),
-        ("viewer", "viewer@secureops.local", "VIEWER"),
+        ("analyst", "analyst@mlinziops.local", "ANALYST"),
+        ("viewer", "viewer@mlinziops.local", "VIEWER"),
     ]
     for username, email, role in demo_users:
         if db.query(User).filter(User.username == username).first():

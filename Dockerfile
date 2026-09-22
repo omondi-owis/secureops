@@ -1,5 +1,5 @@
-# SecureOps — production image
-# Build:  docker build -t secureops:latest .
+# MlinziOps — production image
+# Build:  docker build -t mlinziops:latest .
 
 FROM python:3.12-slim AS base
 
@@ -20,9 +20,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run as a non-root user.
-RUN useradd --create-home --uid 1001 secureops \
-    && chown -R secureops:secureops /app
-USER secureops
+RUN useradd --create-home --uid 1001 mlinziops \
+    && chown -R mlinziops:mlinziops /app
+USER mlinziops
 
 EXPOSE 8000
 

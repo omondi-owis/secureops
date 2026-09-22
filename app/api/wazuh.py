@@ -2,7 +2,7 @@
 
 The service degrades gracefully: if Wazuh is not configured or unreachable,
 status returns OFFLINE and agent/alert endpoints return 503 with a clear
-message — SecureOps itself keeps working. No alert data is ever fabricated.
+message — MlinziOps itself keeps working. No alert data is ever fabricated.
 """
 from __future__ import annotations
 

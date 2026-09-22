@@ -1,4 +1,4 @@
-# SecureOps — Installation (Ubuntu Server 24.04 LTS)
+# MlinziOps — Installation (Ubuntu Server 24.04 LTS)
 
 ## 0. Requirements
 
@@ -15,8 +15,8 @@ sudo apt install -y python3 python3-venv python3-pip postgresql nmap nginx git c
 ## 2. Application directory & venv
 
 ```bash
-sudo mkdir -p /opt/secureops && sudo chown $USER:$USER /opt/secureops
-git clone <your-repo> /opt/secureops && cd /opt/secureops
+sudo mkdir -p /opt/mlinziops && sudo chown $USER:$USER /opt/mlinziops
+git clone <your-repo> /opt/mlinziops && cd /opt/mlinziops
 
 python3 -m venv .venv
 source .venv/bin/activate
@@ -27,8 +27,8 @@ pip install -r requirements.txt
 
 ```bash
 sudo -u postgres psql <<SQL
-CREATE ROLE secureops LOGIN PASSWORD 'STRONG_DB_PASSWORD';
-CREATE DATABASE secureops OWNER secureops;
+CREATE ROLE mlinziops LOGIN PASSWORD 'STRONG_DB_PASSWORD';
+CREATE DATABASE mlinziops OWNER mlinziops;
 SQL
 ```
 
@@ -43,7 +43,7 @@ python -c "import secrets; print(secrets.token_urlsafe(48))"
 Edit `.env`:
 
 - `SECRET_KEY` ← generated value
-- `DATABASE_URL=postgresql+psycopg://secureops:STRONG_DB_PASSWORD@localhost:5432/secureops`
+- `DATABASE_URL=postgresql+psycopg://mlinziops:STRONG_DB_PASSWORD@localhost:5432/mlinziops`
 - `AUTHORIZED_CIDRS` ← your lab networks, e.g. `127.0.0.1/32,192.168.187.0/24`
 - `WAZUH_URL`/`WAZUH_USERNAME`/`WAZUH_PASSWORD` ← your Wazuh manager (optional)
 - `LOG_AUTH_PATH=/var/log/auth.log`, `LOG_SYSLOG_PATH=/var/log/syslog`
@@ -76,44 +76,44 @@ uvicorn app.main:app --reload --port 8000
 ## 7. Run as a systemd service (recommended)
 
 ```bash
-sudo useradd --system --create-home --shell /usr/sbin/nologin secureops
-sudo chown -R secureops:secureops /opt/secureops
+sudo useradd --system --create-home --shell /usr/sbin/nologin mlinziops
+sudo chown -R mlinziops:mlinziops /opt/mlinziops
 
 # Log-reading permissions (group-based, NOT root):
-sudo usermod -aG adm secureops              # reads /var/log/auth.log, syslog
-sudo usermod -aG systemd-journal secureops  # reads journalctl
+sudo usermod -aG adm mlinziops              # reads /var/log/auth.log, syslog
+sudo usermod -aG systemd-journal mlinziops  # reads journalctl
 
 # Optional: only if you want the sudoers/ufw hardening checks to report
-sudo usermod -aG sudo secureops             # allows visudo -c / ufw status
+sudo usermod -aG sudo mlinziops             # allows visudo -c / ufw status
 ```
 
 > If you **do not** grant the `sudo` group, the hardening module simply reports
 > `INFO/„not available"` for those checks — it never fails the app.
 
 ```bash
-sudo cp deploy/secureops.service /etc/systemd/system/secureops.service
+sudo cp deploy/mlinziops.service /etc/systemd/system/mlinziops.service
 sudo systemctl daemon-reload
-sudo systemctl enable --now secureops
-sudo systemctl status secureops
+sudo systemctl enable --now mlinziops
+sudo systemctl status mlinziops
 ```
 
-Update `/opt/secureops/deploy/secureops.service` if your install path differs.
+Update `/opt/mlinziops/deploy/mlinziops.service` if your install path differs.
 
 ## 8. Reverse proxy (Nginx)
 
 ```bash
-sudo cp nginx.conf /etc/nginx/sites-available/secureops
-sudo ln -s /etc/nginx/sites-available/secureops /etc/nginx/sites-enabled/
+sudo cp nginx.conf /etc/nginx/sites-available/mlinziops
+sudo ln -s /etc/nginx/sites-available/mlinziops /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
 ### HTTPS
 
-SecureOps does **not** auto-generate fake certificates. Configure TLS with a real one:
+MlinziOps does **not** auto-generate fake certificates. Configure TLS with a real one:
 
 ```bash
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d secureops.example.com
+sudo certbot --nginx -d mlinziops.example.com
 ```
 
 Then set `COOKIE_SECURE=true` in `.env` and un-comment the HTTP→HTTPS redirect in `nginx.conf`.
@@ -123,8 +123,8 @@ Then set `COOKIE_SECURE=true` in `.env` and un-comment the HTTP→HTTPS redirect
 ```bash
 cp .env.example .env      # set SECRET_KEY, DB_PASSWORD, WAZUH_* etc.
 docker compose up -d --build
-docker compose exec secureops alembic upgrade head
-docker compose exec secureops python -m app.cli create-admin
+docker compose exec mlinziops alembic upgrade head
+docker compose exec mlinziops python -m app.cli create-admin
 ```
 
 See **DEPLOYMENT.md** for production hardening.
@@ -132,8 +132,8 @@ See **DEPLOYMENT.md** for production hardening.
 ## 10. Upgrades
 
 ```bash
-cd /opt/secureops && git pull
+cd /opt/mlinziops && git pull
 source .venv/bin/activate && pip install -r requirements.txt
 alembic upgrade head
-sudo systemctl restart secureops
+sudo systemctl restart mlinziops
 ```

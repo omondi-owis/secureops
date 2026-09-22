@@ -16,7 +16,7 @@ from typing import Any
 
 import psutil
 
-logger = __import__("logging").getLogger("secureops.hardening")
+logger = __import__("logging").getLogger("mlinziops.hardening")
 
 # Port limits under which a service is considered "common management".
 _MANAGEMENT_PORTS = {22, 80, 443, 8080, 8443}
