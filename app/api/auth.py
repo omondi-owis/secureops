@@ -65,6 +65,16 @@ def _authenticate(db: Session, username: str, password: str, ip: str) -> Token:
         )
 
     user = db.query(User).filter(User.username == username).first()
+
+    # Check if account is already locked FIRST
+    if user is not None and _account_locked(user):
+        record(db, "login blocked (locked)", resource="auth", ip_address=ip, result="DENIED",
+               details=f"username={username}", commit=True)
+        raise HTTPException(
+            status_code=423,
+            detail="Account locked due to 3 failed attempts. Please wait 1 minute before trying again.",
+        )
+
     if user is None or not verify_password(password, user.password_hash):
         if user is not None:
             user.failed_login_attempts += 1
@@ -72,6 +82,15 @@ def _authenticate(db: Session, username: str, password: str, ip: str) -> Token:
             if user.failed_login_attempts >= max_attempts:
                 user.locked_until = datetime.now(timezone.utc) + timedelta(
                     seconds=settings.rate_limit_login_window_seconds
+                )
+                db.commit()
+                record(
+                    db, "login locked", resource="auth",
+                    ip_address=ip, result="DENIED", details=f"username={username} reached max attempts", commit=True,
+                )
+                raise HTTPException(
+                    status_code=423,
+                    detail="Account locked due to 3 failed attempts. Please wait 1 minute before trying again.",
                 )
             db.commit()
         record(
@@ -81,14 +100,6 @@ def _authenticate(db: Session, username: str, password: str, ip: str) -> Token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password",
-        )
-
-    if _account_locked(user):
-        record(db, "login blocked (locked)", resource="auth", ip_address=ip, result="DENIED",
-               details=f"username={username}", commit=True)
-        raise HTTPException(
-            status_code=status.HTTP_423_LOCKED,
-            detail="Account locked due to 3 failed attempts. Please wait 1 minute before trying again.",
         )
 
     if not user.is_active:
