@@ -129,3 +129,10 @@ Free self-hosting on your own hardware (Raspberry Pi / old PC / lab server) — 
 ## License
 
 MIT — see [LICENSE](LICENSE). **You are responsible for using this only against systems you are authorized to monitor/assess.**
+
+## Accessing via Tailscale
+
+Once the application is running on the server, authorized users on your private tailnet can access the SOC console. 
+
+- **MagicDNS URL:** `https://mlinziops.tail7495c7.ts.net/`
+- **Note:** For Tailscale HTTPS certificates to work seamlessly on your machine, you can run `tailscale up --accept-dns=true` or simply use `http://<your-server-tailscale-ip>:port` if HTTPS isn't strictly required for local testing.
