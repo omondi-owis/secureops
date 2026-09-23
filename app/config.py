@@ -75,7 +75,7 @@ class Settings(BaseSettings):
     nmap_timeout: int = 300
 
     # Rate limiting
-    rate_limit_login_max: int = 8
+    rate_limit_login_max: int = 3
     rate_limit_login_window_seconds: int = 900
 
     # ---- AI / autonomy ------------------------------------------------
