@@ -76,7 +76,7 @@ class Settings(BaseSettings):
 
     # Rate limiting
     rate_limit_login_max: int = 3
-    rate_limit_login_window_seconds: int = 900
+    rate_limit_login_window_seconds: int = 60
 
     # ---- AI / autonomy ------------------------------------------------
     # ai_provider: "disabled" | "ollama" | "openai_compatible"

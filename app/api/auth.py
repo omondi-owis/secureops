@@ -88,7 +88,7 @@ def _authenticate(db: Session, username: str, password: str, ip: str) -> Token:
                details=f"username={username}", commit=True)
         raise HTTPException(
             status_code=status.HTTP_423_LOCKED,
-            detail="Account temporarily locked due to repeated failures.",
+            detail="Account locked due to 3 failed attempts. Please wait 1 minute before trying again.",
         )
 
     if not user.is_active:
