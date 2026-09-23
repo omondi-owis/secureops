@@ -194,6 +194,9 @@ function setConn(ok) {
 
 /* ---------------- auth ---------------- */
 async function login(username, password) {
+  if (!username || !password) {
+    throw new Error("Invalid input");
+  }
   const form = new URLSearchParams(); form.set("username", username); form.set("password", password);
   const resp = await fetch(API + "/auth/login", {
     method: "POST",
@@ -201,7 +204,17 @@ async function login(username, password) {
     body: form.toString(),
   });
   const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) throw new Error(data.detail || "Login failed");
+  if (!resp.ok) {
+    let msg = "Login failed";
+    if (Array.isArray(data.detail)) {
+      msg = "Invalid input";
+    } else if (typeof data.detail === "string") {
+      msg = data.detail;
+    } else if (data.detail && typeof data.detail === "object") {
+      msg = data.detail.msg || "Invalid input";
+    }
+    throw new Error(msg);
+  }
   TOKEN = data.access_token;
   ME = data.user;
   localStorage.setItem("mlinziops_token", TOKEN);
@@ -241,13 +254,19 @@ function renderLogin() {
   </div>
   <div id="toasts"></div>`;
   const doLogin = async () => {
-    const btn = document.getElementById("login-btn");
-    btn.disabled = true; btn.textContent = "Authenticating…";
+    const uVal = document.getElementById("login-user").value.trim();
+    const pVal = document.getElementById("login-pass").value;
     const err = document.getElementById("login-err");
     err.style.display = "none";
+    if (!uVal || !pVal) {
+      err.textContent = "Invalid input";
+      err.style.display = "block";
+      return;
+    }
+    const btn = document.getElementById("login-btn");
+    btn.disabled = true; btn.textContent = "Authenticating…";
     try {
-      await login(document.getElementById("login-user").value.trim(),
-                  document.getElementById("login-pass").value);
+      await login(uVal, pVal);
     } catch (e) {
       err.textContent = e.message; err.style.display = "block";
       btn.disabled = false; btn.textContent = "Sign in";
